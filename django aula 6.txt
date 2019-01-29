@@ -1,0 +1,96 @@
+criar um app
+python manage.py startapp "nome do app"
+
+acrescentar no arquivo settings.py em installed apps
+'users.apps.UsersConfig' onde users é o nome do app
+
+acrescentar o codigo no views.py para utilizar a biblioteca fornecida pelo django e criar um template para registro
+de usuários register.html
+
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+    form = UserCreationForm()
+    return render (request, 'users/register.html',{'form': form})
+
+criou o template para registrar usuarios
+{% extends "blog/base.html" %}
+{% block content %}    
+    <div class= "content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class ="form-group">
+                <legend class ="border-bottom mb-4">Join Today</legend>
+                {{ form }}
+            </fieldset>
+            <div class ="form-group">
+                <button class = "btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="#"> Sign In </a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
+
+criar a rota para acessar o link de registro no urls.py do projeto
+
+from users import views as users_views
+path('register/', users_views.register, name ='register'),
+
+modificar o views para criação do usuário, redirecionamento de pagina ao criar o usuario e mensagem de sucesso
+ao criar o usuario
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            messages.success(request,f'Account created for {username}!')
+            return redirect('Blog-Home')
+    else:
+        form = UserCreationForm()
+    return render (request, 'users/register.html',{'form': form})
+
+acrescentar no html base para mostrar mensagem de sucesso ao criar o usuário
+ 
+{% if messages %}
+    {% for message in messages %}
+       <div class="alert alert-{{ message.tags }}">
+         {{ message }}
+       </div>
+    {% endfor %}
+{% endif %}
+
+e salvar o usuário acrecetando em views.py de users (dentro do if que valida a criação)
+form.save()
+
+criar um arquivo forms.py para adicionar o campo do email, etc ao formulario de inscrição do usuário e substituir 
+o usercreationform
+
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+utilizar crispy forms para organizar melhor a página, pip install django-crispy-forms e acrescentar
+
+{% load crispy_forms_tags %}
+
+no register.html
+
+lembrar de colocar 'crispy_forms' no installed apps (settings.py) e CRISPY_TEMPLATE_PACK = 'bootstrap4'
+para usar o bootstrap 4 ao invés do default
