@@ -1,6 +1,5 @@
 CURSO PYTHON DJANGO e CRIAÇÃO DE REPOSITÓRIO GITHUB
 
-*Teste de pull request (arthur)*
 
 criando um novo repositorio GITHUB
 
@@ -38,6 +37,20 @@ git push
 lembrar de conferir o git status(indica sua situação atual no processo)
 git log(ver os commmits ja feitos),etc .
 
+
+PASSO A PASSO PARA FAZER UM PULL REQUEST EM UM REPOSITÓRIO REMOTO DE OUTRA PESSOA:
+
+1- Vai no repositório desejado;
+2- Clica em Fork (Isso tipo cria um repositório seu idêntico ao do cara);
+3- Baixa o repositório usando clone (pode ser o seu do fork ou o do cara mesmo);
+4- Faz as modificações que você deseja;
+5- Add os arquivos que você modificou;
+6- Commita os arquivos que você modificou;
+7- git remote add myfork (SSH do repositório no github do seu fork)
+8- git push myfork master (master ou o branch que você tiver usando)
+Agora que o commit já foi feito no seu repositório remoto no github
+9- Vai na aba pull request no github;
+10- New Pull Request
 
 
 
