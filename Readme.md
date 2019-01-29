@@ -1,6 +1,6 @@
 CURSO PYTHON DJANGO e CRIAÇÃO DE REPOSITÓRIO GITHUB
 
-
+*Teste de pull request (arthur)*
 
 criando um novo repositorio GITHUB
 
